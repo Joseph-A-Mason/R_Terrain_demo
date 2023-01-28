@@ -1,1 +1,1 @@
-libgdal.so.20
+libgdal.so
