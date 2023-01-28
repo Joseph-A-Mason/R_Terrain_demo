@@ -1,2 +1,2 @@
 libgdal.dev
-libMagick++-dev
+libMagick++-devel
