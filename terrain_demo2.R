@@ -3,6 +3,7 @@ library(hillshader)
 library(rayshader)
 library(raster)
 library(rayrender)
+library(magick)
 
 sm_tab1r <- rast("table.tif")
 sources(sm_tab1r)
