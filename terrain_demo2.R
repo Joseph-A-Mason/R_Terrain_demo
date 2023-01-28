@@ -16,8 +16,6 @@ plot(hill, col=grey(0:100/100), legend=FALSE, main='Small Loess Table')
 
 localtif = raster::raster("table.tif")
 table_mat = raster_to_matrix(localtif)
-localtif2 = raster::raster("table_acc.tif")
-table_acc = raster_to_matrix(localtif2)
 
 table_mat %>%
   # Create hillshade layer using
