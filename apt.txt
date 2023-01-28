@@ -1,1 +1,1 @@
-libgdal.so
+libgdal.dev
