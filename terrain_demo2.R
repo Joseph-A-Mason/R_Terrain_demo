@@ -4,6 +4,7 @@ library(rayshader)
 library(raster)
 library(rayrender)
 library(magick)
+library(rgl)
 
 sm_tab1r <- rast("table.tif")
 sources(sm_tab1r)
@@ -36,11 +37,19 @@ table_mat %>%
   add_shadow(lamb_shade(table_mat,zscale = 6),0) %>%
   plot_map()
 
+save <- getOption("rgl.useNULL")
+options(rgl.useNULL=TRUE)
+
 table_mat %>%
   sphere_shade(texture = "imhof2", colorintensity = 3.0) %>%
   add_shadow(ray_shade(table_mat, zscale = 20), 0.5) %>%
   add_shadow(ambient_shade(table_mat), 0) %>%
-  plot_3d(table_mat, zscale = 1, windowsize = c(1000, 800))
+  plot_3d(table_mat, zscale=1)
+
+widget<-rglwidget()
+if (interactive())
+  widget 
+
 Sys.sleep(0.2)
 render_snapshot()
 
@@ -51,5 +60,9 @@ table_mat %>%
   add_shadow(ray_shade(table_mat, zscale = 20), 0.5) %>%
   add_shadow(ambient_shade(table_mat), 0) %>%
   plot_3d(table_mat, zscale = 1.0, windowsize = c(1000, 800))
+widget<-rglwidget()
+if (interactive())
+  widget 
+
 Sys.sleep(0.2)
 render_snapshot()
