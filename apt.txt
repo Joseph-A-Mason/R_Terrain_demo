@@ -1,2 +1,2 @@
 libgdal.dev
-libMagick++-dev
+libMagick++-6.q16-dev
