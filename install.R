@@ -1,2 +1,2 @@
-install.packages(c("terra", "hillshader", "magick"))
-devtools::install_github("tylermorganwall/rayshader")
+install.packages(c("terra", 
+                   "tmap", "aqp", "soilDB", "sharpshootR"))
