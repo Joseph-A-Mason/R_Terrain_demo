@@ -1,4 +1,4 @@
-# Demonstration of terrain analysis and visualization in R, Part 2.
+# Demonstration of terrain analysis and visualization in R.
 # For more advanced visualization with rayshader, see
 # sample script on Canvas
 
@@ -201,31 +201,41 @@ plot(IAT_canopy_sm$distance,
      pch=19, type="l", xlab="Distance (m)", 
      ylab="Elevation (m)")
 
+#The spatial queries to external databases that are in the code
+#below do not seem to work within Binder. They are here to
+#demonstrate how to do these, but this script just reads in
+#the final shape file of IAT points with soil properties
+#added
+
 #use the smaller set of points along the Ice Age Trail
 #to extract soil survey information. Start with mapunits,
 #the basic unit of soil survey, used to label polygons.
 #Each mapunit can have two or more components, which
 #are series of similar soils.
-m <- SDA_spatialQuery(IAT_points_sm, what = 'mukey', byFeature = TRUE)
+# m <- SDA_spatialQuery(IAT_points_sm, what = 'mukey', byFeature = TRUE)
 
 #now use mapunits to extract average properties for the
 #components in each map unit
-m2<-get_SDA_property(property=c("om_r", "sandtotal_r"),bottom_depth=20, 
-                       method="Weighted Average",mukeys=m$mukey)
-#with match() and cbind() we can add properties to each
-#point along the trail route
-m$sandtotal_r[1:370]<-m2$sandtotal_r[match(m$mukey[1:370], m2$mukey)]
-m$om_r[1:370]<-m2$om_r[match(m$mukey[1:370], m2$mukey)]
-m_points_sm<-cbind(IAT_points_sm, m)
+# m2<-get_SDA_property(property=c("om_r", "sandtotal_r"),bottom_depth=20, 
+#                        method="Weighted Average",mukeys=m$mukey)
+# #with match() and cbind() we can add properties to each
+# #point along the trail route
+# m$sandtotal_r[1:370]<-m2$sandtotal_r[match(m$mukey[1:370], m2$mukey)]
+# m$om_r[1:370]<-m2$om_r[match(m$mukey[1:370], m2$mukey)]
+# m_points_sm<-cbind(IAT_points_sm, m)
 
 #make a quick plot of the IAT points shaded by %sand,
 #then if they look okay, save as a shapefile
-plot(m_points_sm, "sandtotal_r", type="continuous")
+#plot(m_points_sm, "sandtotal_r", type="continuous")
 
 #now make some plots with tmap, including points shaded
 #by soil properties. Uses the smaller area but would
 #work for the larger area with some modification of the
 #above code
+
+#reads in shapefile created with the above code
+#only necessary in this Binder notebook version
+m_point_sm<-vect("m_points_sm.shp")
 
 #plot the trail with sand content symbols
 tmap::tm_shape(dtm_shade_sm) +
