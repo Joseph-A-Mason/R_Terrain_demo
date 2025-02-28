@@ -236,7 +236,7 @@ plot(IAT_canopy_sm$distance,
 
 #reads in shapefile created with the above code
 #only necessary in this Binder notebook version
-m_point_sm<-vect("m_points_sm.shp")
+m_points_sm<-vect("m_points_sm.shp")
 
 #plot the trail with sand content symbols
 tmap::tm_shape(dtm_shade_sm) +
