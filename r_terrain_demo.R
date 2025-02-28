@@ -9,9 +9,10 @@ library(terra)
 #mapping package
 library(tmap)
 #linked packages for working with soil survey data
-library(aqp)
-library(soilDB)
-library(sharpshootR)
+#not used in this Binder notebook version
+# library(aqp)
+# library(soilDB)
+# library(sharpshootR)
 
 #read in a DEM and make a quick plot
 Mondeaux_dtm <- rast("Mondeaux_dtm.tif")
