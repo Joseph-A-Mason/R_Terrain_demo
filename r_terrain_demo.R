@@ -13,9 +13,6 @@ library(aqp)
 library(soilDB)
 library(sharpshootR)
 
-#set working directory (more advanced R users often don't approve of this
-#but it's a simple step that helps keep things organized)
-
 #read in a DEM and make a quick plot
 Mondeaux_dtm <- rast("Mondeaux_dtm.tif")
 plot(Mondeaux_dtm)
