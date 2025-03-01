@@ -1,2 +1,2 @@
 install.packages(c("terra", 
-                   "tmap"))
+                   "tmap", "aqp", "soilDB", "sharpshootR"))

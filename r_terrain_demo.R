@@ -10,9 +10,9 @@ library(terra)
 library(tmap)
 #linked packages for working with soil survey data
 #not used in this Binder notebook version
-# library(aqp)
-# library(soilDB)
-# library(sharpshootR)
+library(aqp)
+library(soilDB)
+library(sharpshootR)
 
 #read in a DEM and make a quick plot
 Mondeaux_dtm <- rast("Mondeaux_dtm.tif")
@@ -213,21 +213,21 @@ plot(IAT_canopy_sm$distance,
 #the basic unit of soil survey, used to label polygons.
 #Each mapunit can have two or more components, which
 #are series of similar soils.
-# m <- SDA_spatialQuery(IAT_points_sm, what = 'mukey', byFeature = TRUE)
+m <- SDA_spatialQuery(IAT_points_sm, what = 'mukey', byFeature = TRUE)
 
 #now use mapunits to extract average properties for the
 #components in each map unit
-# m2<-get_SDA_property(property=c("om_r", "sandtotal_r"),bottom_depth=20, 
-#                        method="Weighted Average",mukeys=m$mukey)
-# #with match() and cbind() we can add properties to each
-# #point along the trail route
-# m$sandtotal_r[1:370]<-m2$sandtotal_r[match(m$mukey[1:370], m2$mukey)]
-# m$om_r[1:370]<-m2$om_r[match(m$mukey[1:370], m2$mukey)]
-# m_points_sm<-cbind(IAT_points_sm, m)
+m2<-get_SDA_property(property=c("om_r", "sandtotal_r"),bottom_depth=20,
+                       method="Weighted Average",mukeys=m$mukey)
+#with match() and cbind() we can add properties to each
+#point along the trail route
+m$sandtotal_r[1:370]<-m2$sandtotal_r[match(m$mukey[1:370], m2$mukey)]
+m$om_r[1:370]<-m2$om_r[match(m$mukey[1:370], m2$mukey)]
+m_points_sm<-cbind(IAT_points_sm, m)
 
 #make a quick plot of the IAT points shaded by %sand,
 #then if they look okay, save as a shapefile
-#plot(m_points_sm, "sandtotal_r", type="continuous")
+plot(m_points_sm, "sandtotal_r", type="continuous")
 
 #now make some plots with tmap, including points shaded
 #by soil properties. Uses the smaller area but would
