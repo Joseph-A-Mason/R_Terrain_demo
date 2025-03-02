@@ -233,10 +233,6 @@ plot(m_points_sm, "sandtotal_r", type="continuous")
 #work for the larger area with some modification of the
 #above code
 
-#reads in shapefile created with the above code
-#only necessary in this Binder notebook version
-m_points_sm<-vect("m_points_sm.shp")
-
 #plot the trail with sand content symbols
 tmap::tm_shape(dtm_shade_sm) +
   tmap::tm_raster(
@@ -311,7 +307,7 @@ sql <- sprintf(
   WHERE mukey IN %s 
   --AND majcompflag = 'Yes'
   AND compkind != 'Miscellaneous area'
-  ", format_SQL_in_statement(as.integer(m3$mukey))
+  ", format_SQL_in_statement(as.integer(m$mukey))
 )
 # send to SDA, result is a data.frame
 s <- SDA_query(sql)
