@@ -1,2 +1,2 @@
-install.packages(c("terra", 
-                   "tmap", "aqp", "soilDB", "sharpshootR", "SoilTaxonomy"))
+install.packages(c("terra", "aqp", "soilDB", "sharpshootR", "SoilTaxonomy"))
+remotes::install_github("r-tmap/tmap")
