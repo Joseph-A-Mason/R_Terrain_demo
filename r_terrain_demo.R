@@ -14,6 +14,7 @@ library(aqp)
 library(soilDB)
 library(sharpshootR)
 
+setwd("C:/Users/mason/github/R_Terrain_demo")
 #read in a DEM and make a quick plot
 Mondeaux_dtm <- rast("Mondeaux_dtm.tif")
 plot(Mondeaux_dtm)
@@ -213,20 +214,25 @@ plot(IAT_canopy_sm$distance,
 #the basic unit of soil survey, used to label polygons.
 #Each mapunit can have two or more components, which
 #are series of similar soils.
-m <- SDA_spatialQuery(IAT_points_sm, what = 'mukey', byFeature = TRUE)
+aoi_polygon_sm<-as.polygons(ext(Mondeaux_dtm_sm), crs=crs(Mondeaux_dtm_sm))
+aoi_mapunits_sm<- SDA_spatialQuery(aoi_polygon_sm, what = 'mupolygon')
+crs(aoi_polygon_sm)
+aoi_mu_sm_proj<-project(aoi_mapunits_sm, crs(aoi_polygon_sm))
+aoi_mu_sm_cl<-crop(aoi_mu_sm_proj, Mondeaux_dtm_sm)
 
 #now use mapunits to extract average properties for the
 #components in each map unit
-m2<-get_SDA_property(property=c("om_r", "sandtotal_r"),bottom_depth=20,
-                       method="Weighted Average",mukeys=m$mukey)
+m<-get_SDA_property(property=c("om_r", "sandtotal_r"),bottom_depth=20,
+                       method="Weighted Average",mukeys=aoi_mu_sm_cl$mukey)
 #with match() and cbind() we can add properties to each
 #point along the trail route
-m$sandtotal_r[1:370]<-m2$sandtotal_r[match(m$mukey[1:370], m2$mukey)]
-m$om_r[1:370]<-m2$om_r[match(m$mukey[1:370], m2$mukey)]
-m_points_sm<-cbind(IAT_points_sm, m)
-
+m2<-intersect(IAT_points_sm, aoi_mu_sm_cl)
+m2$sandtotal_r[1:370]<-m$sandtotal_r[match(m2$mukey[1:370], m$mukey)]
+m2$om_r[1:370]<-m$om_r[match(m2$mukey[1:370], m$mukey)]
+m_points_sm<-cbind(IAT_points_sm, m2)
 #make a quick plot of the IAT points shaded by %sand,
-#then if they look okay, save as a shapefile
+#to see if they look okay
+
 plot(m_points_sm, "sandtotal_r", type="continuous")
 
 #now make some plots with tmap, including points shaded
