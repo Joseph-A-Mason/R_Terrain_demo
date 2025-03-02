@@ -12,6 +12,7 @@ library(tmap)
 library(aqp)
 library(soilDB)
 library(sharpshootR)
+library(SoilTaxonomy)
 
 #read in a DEM and make a quick plot
 Mondeaux_dtm <- rast("Mondeaux_dtm.tif")
