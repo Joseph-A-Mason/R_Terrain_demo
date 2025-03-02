@@ -1,2 +1,2 @@
 install.packages(c("terra", "aqp", "soilDB", "sharpshootR", "SoilTaxonomy"))
-remotes::install_github("r-tmap/tmap")
+install.packages("tmap", repos = c("https://r-tmap.r-universe.dev", "https://cloud.r-project.org"))
