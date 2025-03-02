@@ -9,12 +9,10 @@ library(terra)
 #mapping package
 library(tmap)
 #linked packages for working with soil survey data
-#not used in this Binder notebook version
 library(aqp)
 library(soilDB)
 library(sharpshootR)
 
-setwd("C:/Users/mason/github/R_Terrain_demo")
 #read in a DEM and make a quick plot
 Mondeaux_dtm <- rast("Mondeaux_dtm.tif")
 plot(Mondeaux_dtm)
@@ -203,20 +201,15 @@ plot(IAT_canopy_sm$distance,
      pch=19, type="l", xlab="Distance (m)", 
      ylab="Elevation (m)")
 
-#The spatial queries to external databases that are in the code
-#below do not seem to work within Binder. They are here to
-#demonstrate how to do these, but this script just reads in
-#the final shape file of IAT points with soil properties
-#added
 
 #use the smaller set of points along the Ice Age Trail
-#to extract soil survey information. Start with mapunits,
-#the basic unit of soil survey, used to label polygons.
+#to extract soil survey information. Start with polygons, each 
+#of which represents an instance of a mapunit,
+#the basic unit of soil survey.
 #Each mapunit can have two or more components, which
 #are series of similar soils.
 aoi_polygon_sm<-as.polygons(ext(Mondeaux_dtm_sm), crs=crs(Mondeaux_dtm_sm))
 aoi_mapunits_sm<- SDA_spatialQuery(aoi_polygon_sm, what = 'mupolygon')
-crs(aoi_polygon_sm)
 aoi_mu_sm_proj<-project(aoi_mapunits_sm, crs(aoi_polygon_sm))
 aoi_mu_sm_cl<-crop(aoi_mu_sm_proj, Mondeaux_dtm_sm)
 
@@ -226,9 +219,9 @@ m<-get_SDA_property(property=c("om_r", "sandtotal_r"),bottom_depth=20,
                        method="Weighted Average",mukeys=aoi_mu_sm_cl$mukey)
 #with match() and cbind() we can add properties to each
 #point along the trail route
-m2<-intersect(IAT_points_sm, aoi_mu_sm_cl)
-m2$sandtotal_r[1:370]<-m$sandtotal_r[match(m2$mukey[1:370], m$mukey)]
-m2$om_r[1:370]<-m$om_r[match(m2$mukey[1:370], m$mukey)]
+m2<-as.data.frame(intersect(IAT_points_sm, aoi_mu_sm_cl))
+m2$sandtotal_r[1:371]<-m$sandtotal_r[match(m2$mukey[1:371], m$mukey)]
+m2$om_r[1:371]<-m$om_r[match(m2$mukey[1:371], m$mukey)]
 m_points_sm<-cbind(IAT_points_sm, m2)
 #make a quick plot of the IAT points shaded by %sand,
 #to see if they look okay
