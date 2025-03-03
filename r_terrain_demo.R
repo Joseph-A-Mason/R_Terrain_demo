@@ -221,8 +221,8 @@ m<-get_SDA_property(property=c("om_r", "sandtotal_r"),bottom_depth=20,
 #with match() and cbind() we can add properties to each
 #point along the trail route
 m2<-as.data.frame(intersect(IAT_points_sm, aoi_mu_sm_cl))
-m2$sandtotal_r[1:371]<-m$sandtotal_r[match(m2$mukey[1:371], m$mukey)]
-m2$om_r[1:371]<-m$om_r[match(m2$mukey[1:371], m$mukey)]
+m2$sandtotal_r[1:370]<-m$sandtotal_r[match(m2$mukey[1:370], m$mukey)]
+m2$om_r[1:370]<-m$om_r[match(m2$mukey[1:370], m$mukey)]
 m2<-m2[,-(1:16)]
 m_points_sm<-cbind(IAT_points_sm, m2)
 #make a quick plot of the IAT points shaded by %sand,
