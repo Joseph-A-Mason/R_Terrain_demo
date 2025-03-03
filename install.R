@@ -1,1 +1,1 @@
-install.packages(c("terra", "aqp", "tmap","soilDB", "sharpshootR", "SoilTaxonomy"))
+install.packages(c("terra", "aqp", "tmap","soilDB", "sharpshootR", "SoilTaxonomy", "httr"))
